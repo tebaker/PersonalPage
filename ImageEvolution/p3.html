@@ -1,0 +1,183 @@
+<html>
+<head>
+
+
+<script src="p5.min.js"></script>
+<script>
+"use strict";
+
+// number of alternative designs to consider
+// within a single generation
+const numAlternatives = 10;
+// controls amount of change in a single mutation
+const mutationAmount  = 0.01;
+
+// other constants needed to represent designs
+//represents the individual shapes on the screen
+const genesPerIndividual = 60 * 4;
+const paramsPerGene      = 8;
+
+// remember the best design ever seen
+let bestDesign;
+let bestScore;
+
+// remember the current design
+// (best of the most recent generation)
+let currentDesign;
+let currentScore;
+
+// store the image we are trying to recreate
+let targetImage;
+let img01;
+
+function preload() {
+  targetImage = loadImage(ideal.src);
+  // img01 = loadImage("test.jpg");
+}
+
+function setup() {
+    pixelDensity(1);
+    createCanvas(
+    targetImage.width,
+    targetImage.height);
+
+    targetImage.loadPixels();
+
+    currentDesign = generate();
+    bestDesign = currentDesign;
+
+    currentScore = Number.NEGATIVE_INFINITY;
+    bestScore = currentScore;
+}
+
+function draw() {
+    evolve();
+    if (currentScore > bestScore) {
+        bestDesign = currentDesign;
+        bestScore = currentScore;
+    }
+
+    if (keyIsDown(SHIFT)) {
+        drawDesign(currentDesign);
+    } else {
+        drawDesign(bestDesign);
+    }
+}
+
+function evolve() {
+    let localScore = Number.NEGATIVE_INFINITY;
+    let localDesign = currentDesign;
+    for (let i = 0; i < numAlternatives; i++) {
+        let alternativeDesign = mutate(currentDesign);
+        drawDesign(alternativeDesign);
+        let alternativeScore = evaluateFitness();
+        if (alternativeScore > localScore) {
+            localDesign = alternativeDesign;
+            localScore = alternativeScore;
+        }
+    }
+    currentDesign = localDesign;
+    currentScore = localScore;
+}
+
+function generate() {
+    let design = [];
+    for (let g = 0; g < genesPerIndividual * paramsPerGene; g++) {
+      design.push(1); //changed to white to help the program out in the beginning
+    }
+    return design;
+}
+
+function mutate(design) {
+    //slice returns a shallow copy of a portion of an array into a new object
+    //  original array will not be affected
+    let mutant = design.slice();
+    for (let i = 0; i < genesPerIndividual * paramsPerGene; i++) {
+      mutant[i] = constrain(mutant[i] - randomGaussian(0, mutationAmount), 0, 1);
+    }
+    return mutant;
+}
+
+function drawDesign(design) {
+
+  var params = design.slice();
+  var k = 0;
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, 0, PI*1/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*1/16, PI*2/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*2/16, PI*3/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*3/16, PI*4/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*4/16, PI*5/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*5/16, PI*6/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*6/16, PI*7/16);
+    k += 4;
+  }
+
+  for(var i = 0; i < 60; i++){
+    stroke(params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    fill(  params[k+0]*255, params[k+1]*255, params[k+2]*255, params[k+3]*255);
+    arc(0, 0, 550 - i*10, 550 - i*10, PI*7/16, PI*8/16);
+    k += 4;
+  }
+
+}
+
+
+function evaluateFitness() {
+    loadPixels();
+    let score = 0;
+    for (let p = 0; p < pixels.length; p += 9) {
+        let diff = (pixels[p]-targetImage.pixels[p]);
+        score -= Math.abs(diff);
+    }
+    return score;
+}
+
+
+
+</script>
+</head>
+<body>
+<img id="ideal" src="lego.jpg"/>
+</body>
+</html>
+
