@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="./xxhash.min.js"></script>
+    <script src="./p5.min.js"></script>
+    <script src="./addons/p5.dom.js"></script>
+    <script src="./support.js"></script>
+    
+    <script src="world.js"></script>
+    <style>
+    </style>
+  </head>
+  <body>
+  <div id="container"></div>
+  <p>Move with the arrow keys, click on drowning person to save them! Enter a world seed for a new world.</p>
+  <p><strong>Artistic Statement:</strong></p>
+  <p>I went with a very simple point and click theme where the player will save drowning peoples from the ocean! Once they are clicked, the drowning person will be given a lifesaver and saved from drowning!</p>
+  <p>I went with a slightly different approach, I used perlin noise to randomly space out my objects. My drowning people will appear more frequently than the boats because they are both placed by peaks in the noise function with the boats appearing at a higher elevation than the people</p>
+  <p>I wanted to place small islands using peeks of perlin noise that the people would sit but it turned out to be very difficult nd my implementation of the island was really calculation heavy and lagged the computer. I am happy with how this turned out even though the code could be much better! I collaborated with a friend to get the smooth scrolling ocean effect and I think it looks really great</p>
+  </body>
+</html>
