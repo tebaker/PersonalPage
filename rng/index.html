@@ -1,0 +1,48 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<title> "RNG" </title>
+		<!-- Include external libraries -->
+		<script src = "lib/webgl-utils.js"></script>
+		<script src = "lib/webgl-debug.js"></script>
+		<script src = "lib/cuon-utils.js"></script>
+		<script src = "lib/cuon-matrix.js"></script>
+
+		<!-- Include main program -->
+		<script src = "prog/main.js"></script>
+
+		<!-- Include internal functions -->
+		<script src = "prog/eventFunctions.js"></script>
+
+		<!-- Seed RNG -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js">
+		</script>
+	</head>
+
+<!-- Initial Roll -->
+	<p>Roll a D1000!</p>
+	Seed:<br><input type="text" id="seed" value="">
+	<br><br>
+	<button type="button" onclick="rollTheDice()">Roll!</button>
+	<p id="results">
+		<br>Result of Roll:
+		<br>Seed used is: 
+		<br>Time of Roll:
+	</p>
+	<hr>
+
+<!-- Validate Roll -->
+	<p>Validate Roll</p>
+	Seed:<br><input type="text" id="seedUsed" value="">
+	<br>
+
+	Time of Roll:<br><input type="text" id="timeOfRollUsed" value="">
+	<br><br>
+
+	<button type="button" onclick="validateRoll()">Validate!</button>
+	<p id="validate">
+		<br>Outcome of Roll Was:
+	</p>
+
+	</body>
+</html>
