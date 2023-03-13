@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Presto Guessto</title>
+	<style>
+		body {
+			text-align: center; /* center all text */
+			font-family: Arial, sans-serif; /* use Arial or sans-serif font */
+			color: #333; /* set text color to dark gray */
+		}
+		h2 {
+			margin-top: 10px; /* add some margin above the title */
+			font-size: 36px; /* increase font size of title */
+			font-weight: normal; /* remove bold from title */
+		}
+		.result {
+			margin-top: 20px;
+			font-weight: bold;
+		}
+		.incorrect {
+			color: red; /* make incorrect guesses appear in red */
+		}
+		.correct {
+			color: green; /* make correct guesses appear in green */
+		}
+		.guesses {
+			margin-top: 10px;
+			font-size: 24px;
+			color: #666; /* set text color to light gray */
+		}
+		.countdown {
+			margin-top: 10px;
+			font-size: 16px;
+			color: #666; /* set text color to light gray */
+		}
+	</style>
+	<script>
+		var wordList = [
+			"grape",
+			"banana",
+			"cherry",
+			"date",
+			"elderberry",
+			"fig",
+			"apple", 
+			"honeydew",
+			"ice",
+			"jam",
+			"kiwi",
+			"lemon",
+			"mango",
+			"nectarine",
+			"orange",
+			"pear",
+			"quince",
+			"raspberry",
+			"strawberry",
+			"tangerine",
+			"ugli",
+			"vanilla",
+			"watermelon",
+			"xylophone",
+			"yellow",
+			"zucchini",
+			"alligator",
+			"balloon",
+			"caterpillar",
+			"dinosaur",
+			"elephant",
+			"flamingo",
+			"giraffe",
+			"hippopotamus",
+			"iguana",
+			"jaguar",
+			"kangaroo",
+			"leopard",
+			"monkey",
+			"narwhal",
+			"ostrich",
+			"panda",
+			"quokka",
+			"rhinoceros",
+			"sloth",
+			"tiger",
+			"unicorn",
+			"vulture",
+			"walrus",
+			"xenarthra",
+			"yak",
+			"zebra",
+			"art",
+			"ballet",
+			"cooking",
+			"dancing",
+			"exercise",
+			"fishing",
+			"gardening",
+			"hiking",
+			"skating",
+			"jogging",
+			"knitting",
+			"learning",
+			"music",
+			"nature",
+			"painting",
+			"quilting",
+			"reading",
+			"singing",
+			"traveling",
+			"ukulele",
+			"volunteering",
+			"writing",
+			"yoga",
+			"zumba",
+			"astronomy",
+			"biology",
+			"chemistry",
+			"physics",
+			"mathematics",
+			"computer",
+			"statistics",
+			"economics",
+			"psychology",
+			"philosophy",
+			"linguistics",
+			"history",
+			"geography",
+			"sociology",
+			"anthropology",
+			"archaeology",
+			"criminology",
+			"theology",
+			"ecology",
+			"botany",
+			"zoology",
+			"entomology",
+			"meteorology",
+			"seismology",
+			"paleontology",
+			"oceanography",
+			"apple",
+			"banana",
+			"cat",
+			"dog",
+			"elephant",
+			"frog",
+			"goat",
+			"house",
+			"ice",
+			"juice",
+			"kite",
+			"lemon",
+			"mouse",
+			"nest",
+			"orange",
+			"pear",
+			"queen",
+			"rose",
+			"sun",
+			"tiger",
+			"umbrella",
+			"violin",
+			"water",
+			"xylophone",
+			"yak",
+			"zebra",
+			"ant",
+			"bee",
+			"car",
+			"desk",
+			"egg",
+			"fire",
+			"grape",
+			"hat",
+			"ink",
+			"jacket",
+			"kangaroo",
+			"lion",
+			"monkey",
+			"net",
+			"ocean",
+			"pizza",
+			"quilt",
+			"rabbit",
+			"snake",
+			"tree",
+			"unicorn",
+			"vase",
+			"watermelon",
+			"xylophone",
+			"yam",
+			"zeppelin",
+			"apricot",
+			"blueberry",
+			"cranberry",
+			"dragonfruit",
+			"elderflower",
+			"guava",
+			"honeycrisp",
+			"jackfruit",
+			"key",
+			"lime",
+			"lychee",
+			"pear",
+			"pomegranate",
+			"quinoa",
+			"raspberry",
+			"sorbet",
+			"tangelo",
+			"ugli",
+			"fruit",
+			"vanilla",
+			"bean",
+			"white",
+			"currant",
+			"yellow",
+			"plum",
+			"zesty",
+			"lime",
+			"asparagus",
+			"bell",
+			"pepper",
+			"cucumber",
+			"dill",
+			"weed",
+			"eggplant",
+			"fennel",
+			"bulb",
+			"garlic",
+			"clove",
+			"horseradish",
+			"jalapeno",
+			"kale",
+			"lettuce",
+			"mushroom",
+			"napa",
+			"cabbage",
+			"onion",
+			"powder",
+			"parsley",
+			"quince",
+			"paste",
+			"radish",
+			"shallot",
+			"thyme",
+			"udon",
+			"noodle",
+			"vegan",
+			"cheese",
+			"watercress",
+			"watermelon",
+			"yellow",
+			"squash",
+			"zucchini",
+			"blossom",
+			"abstract",
+			"art",
+			"ballet",
+			"slipper",
+			"calligraphy",
+			"pen",
+			"decoupage",
+			"paper",
+			"embroidery",
+			"floss",
+			"fingerpaint",
+			"glassblowing",
+			"henna",
+			"tattoo",
+			"inkwell",
+			"jewelry",
+			"wire",
+			"kaleidoscope",
+			"letterpress",
+			"macrame",
+			"cord",
+			"needle",
+			"felting",
+			"origami",
+			"paper",
+			"pastel",
+			"chalk",
+			"quilting",
+			"fabric",
+			"ribbon",
+			"embroidery",
+			"stained",
+			"glass",
+			"shirt",
+			"upholstery",
+			"foam",
+			"vinyl",
+			"record",
+			"watercolor",
+			"paint",
+			"film",
+			"yoga",
+			"mat",
+			"zentangle",
+			"art",
+			"archaeology",
+			"dig",
+			"birdwatching",
+			"camping",
+			"gear",
+			"digital",
+			"camera",
+			"fishing",
+			"lure",
+			"gardening",
+			"gloves",
+			"hiking",
+			"boots",
+			"insect",
+			"repellent",
+			"jogging",
+			"stroller",
+			"kayak",
+			"paddle",
+			"lantern",
+			"mountaineering",
+			"rope",
+			"night",
+			"vision",
+			"goggles",
+			"outdoor",
+			"grill",
+			"picnic",
+			"basket",
+			"quadcopter",
+			"drone",
+			"rain",
+			"jacket",
+			"sleeping",
+			"bag",
+			"telescopic",
+			"lens",
+			"ultralight",
+			"backpack",
+			"virtual",
+			"reality",
+			"headset",
+			"waterproof",
+			"watch",
+			"yoga",
+			"block",
+			"harness",
+			"adventure",
+			"book",
+			"bamboo",
+			"chopsticks"
+		]; // list of words to choose from
+		var currentWordIndex = 0; // initialize the current word index
+		var targetWord = wordList[currentWordIndex]; // set the target word to the first word in the list
+		var guessCounter = 0; // initialize the guess counter
+		var countdownInterval; // variable to hold the countdown interval
+
+		function checkWord() {
+			var userWord = document.getElementById("wordInput").value.toLowerCase(); // get the user's word and convert to lowercase
+			var resultDiv = document.getElementById("result"); // get the result div element
+
+			// check if guess is "magic" and replace it with targetWord
+			if (userWord === "magic") {
+			    const newMessage = message.textContent.replace("magic", targetWord);
+			    message.textContent = newMessage;
+			}
+
+			// // check if guess is "magic" and replace it with targetWord
+			// if (userWord === "magic") {
+			//     var secretWordElement = document.getElementById("message"); // get the element that contains the secret word
+			//     secretWordElement.textContent = targetWord; // replace the textContent property with the targetWord variable
+			// }
+
+			if (userWord === targetWord) {
+				resultDiv.innerHTML = "<span class='correct'>Congratulations! You found the target word!</span>";
+			} else {
+				guessCounter++; // increment the guess counter
+				resultDiv.innerHTML = "<span class='incorrect'>Sorry, that's not the target word.</span>";
+			}
+			document.getElementById("guesses").innerHTML = "Guesses so far: " + guessCounter; // update the guess counter display
+		}
+
+		function updateTimer() {
+		    var now = new Date(); // get the current date and time
+		    var resetTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0); // set the reset time to midnight of the next day
+		    var timeLeftSeconds = Math.floor((resetTime.getTime() - now.getTime()) / 1000); // calculate the time left in seconds
+		    var minutesLeft = Math.floor(timeLeftSeconds / 60); // calculate the minutes left
+		    var secondsLeft = timeLeftSeconds % 60; // calculate the seconds left
+		    var countdownDisplay = "Next word in " + minutesLeft + "m " + secondsLeft + "s"; // create the countdown display string
+		    document.getElementById("countdown").innerHTML = countdownDisplay; // display the countdown
+		    if (now >= resetTime) { // if the reset time has passed
+		        currentWordIndex = (currentWordIndex + 1) % wordList.length; // move to the next word in the list, looping back to the beginning if necessary
+		        targetWord = wordList[currentWordIndex]; // set the new target word
+		        guessCounter = 0; // reset the guess counter
+		        clearInterval(countdownInterval); // clear the countdown interval
+		        updateTimer(); // update the timer display
+	    	}
+
+		}
+
+		countdownInterval = setInterval(updateTimer, 1000); // set the interval to update the timer every second
+		updateTimer(); // update the timer display
+
+	</script>
+</head>
+<body>
+	<div class="countdown" id="countdown"></div>
+	<!-- <button id="share-button">Share Guesses</button> -->
+
+	<h2>Presto Guessto</h2>
+
+	<div id="message">
+		Because the only way you'll guess the word is by magic or something!
+	</div>
+	<div class="guesses" id="guesses">Guesses so far: 0</div> <!-- add a div element to display the guess counter -->
+	<p>Enter a word:</p>
+	<input type="text" id="wordInput">
+	<br>
+	<button onclick="checkWord()">Guess</button> <!-- move the guess button down and center it -->
+	<div class="result" id="result"></div> <!-- add a div element to display the result -->
+</body>
+</html>
